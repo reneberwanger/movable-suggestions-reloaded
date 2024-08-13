@@ -1,5 +1,5 @@
-types Notifications {
- 
+﻿types Notifications {
+
     ######################################################
     ###################### ALERTS ########################
     ######################################################
@@ -1128,7 +1128,7 @@ types Notifications {
     type notifications_suggestions = window {
         name = "action_items"
         visible = "[And( And( ActionItemHandler.ShouldBeVisible, Not( IsGameViewOpen( 'barbershop' ) ) ), Not( IsPauseMenuShown ) )]"
-		visible_at_creation = no
+        visible_at_creation = no
         alwaystransparent = no
         allow_outside = yes
 
@@ -1370,23 +1370,22 @@ types Notifications {
         window = {
             visible = "[ActionItemHandler.IsListVisible]"
             visible_at_creation = no
-            parentanchor = top|right
-            position = { 30 80 }
             alwaystransparent = no
             filter_mouse = all
+            
 
             state = {
                 name = _show
                 using = Animation_FadeIn_Quick
                 using = Sound_WindowShow_Suggestion
-                #position_y = 80
+                position_y = 80
             }
 
             state = {
                 name = _hide
                 using = Animation_FadeOut_Quick
                 using = Sound_WindowHide_Suggestion
-                #position_y = 40
+                position_y = 40
             }
 
             background = {
@@ -1418,7 +1417,6 @@ types Notifications {
                 scissor = yes
 
                 widget = {
-                    size = { 322 544 }
                     position = { 6 6 }
                     scale = 0.5
                     alpha = 0.6
@@ -1437,7 +1435,6 @@ types Notifications {
                 }
 
                 widget = {
-                    size = { 322 544 }
                     parentanchor = top|right
                     position = { -6 6 }
                     scale = 0.5
@@ -1486,9 +1483,9 @@ types Notifications {
             }
 
             vbox = {
+                
                 name = "action_items_container"
                 set_parent_size_to_minimum = yes
-                minimumsize = { 384 50 }
                 margin_top = 14
                 spacing = 15
                 ignoreinvisible = yes
@@ -1543,7 +1540,7 @@ types Notifications {
                         text_single = {
                             layoutpolicy_horizontal = expanding
                             text = "CURRENT_SITUATION_HEADER"
-                            max_width = 220
+                            max_width = 390
                             using = Font_Size_Medium
                             allow_outside = yes
                             align = center
@@ -1556,7 +1553,6 @@ types Notifications {
 
                                 button_change = {
                                     name = "reset_dismissed"
-                                    position = { 2 -2 }
                                     onclick = "[ActionItemHandler.ResetAllDismissed]"
                                     tooltip = "RESET_DISMISSED_TOOLTIP"
 
@@ -1586,7 +1582,7 @@ types Notifications {
                     container = {
                         scrollbox = {
                             visible = "[ActionItemHandler.HasAvailableCurrentSituationItems]"
-                            maximumsize = { -1 600 }
+                            maximumsize = { -1 800 }
 
                             blockoverride "scrollbox_background_fade" {}
                             blockoverride "scrollbox_background" {}
@@ -1607,18 +1603,18 @@ types Notifications {
                                 item = {
                                     flowcontainer = {
                                         ignoreinvisible = yes
-                                        minimumsize = { 368 0 }
+                                        minimumsize = { 500 0 }
                                         direction = vertical
 
                                         button_current_situation_item = {
                                             visible = "[And(GuiActionItem.IsVisible, Not(GuiActionItem.HasMultipleActions))]"
                                             datacontext = "[GuiActionItem.GetFirstVisibleActionItem]"
-                                            minimumsize = { 360 0 }
+                                            minimumsize = { 500 0 }
                                         }
 
                                         button_current_situation_item_multiple = {
                                             visible = "[And(GuiActionItem.IsVisible, GuiActionItem.HasMultipleActions)]"
-                                            minimumsize = { 360 0 }
+                                            minimumsize = { 500 0 }
                                         }
 
                                         flowcontainer = {
@@ -1637,7 +1633,7 @@ types Notifications {
                                             item = {
                                                 button_current_situation_item_combined = {
                                                     datacontext = "[GuiActionImportantActionItem.GetImportantAction]"
-                                                    minimumsize = { 350 0 }
+                                                    minimumsize = { 490 0 }
                                                 }
                                             }
                                         }
@@ -2115,7 +2111,7 @@ types Suggestions
 
     type button_current_situation_item = button_standard {
         visible = "[ImportantActionItem.IsVisible]"
-        minimumsize = { 350 0 }
+        minimumsize = { 500 0 }
 
         onclick = "[ImportantActionItem.OnClick]"
         onrightclick = "[ImportantActionItem.Dismiss]"
@@ -2174,9 +2170,10 @@ types Suggestions
 
             text_multi = {
                 autoresize = yes
-                max_width = 315
+                max_width = 460
                 text = "ACTION_IS_VISIBLE_READ_UNREAD"
                 alwaystransparent = yes
+                fontsize = 14
             }
 
             expand = {}
@@ -2256,9 +2253,10 @@ types Suggestions
             text_multi = {
                 layoutpolicy_horizontal = expanding
                 autoresize = yes
-                max_width = 300
+                max_width = 460
                 text = "IMPORTANT_ACTION_COMBINED_LABEL"
                 alwaystransparent = yes
+                fontsize = 14
             }
 
             text_single = {
@@ -2300,7 +2298,8 @@ types Suggestions
             text_multi = {
                 layoutpolicy_horizontal = expanding
                 autoresize = yes
-                max_width = 300
+                max_width = 500
+                fontsize = 14
 
                 align = nobaseline
                 text = "ACTION_IS_VISIBLE_READ_UNREAD_COMBINED"

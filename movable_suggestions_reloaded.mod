@@ -4,6 +4,6 @@ tags={
 	"Graphics"
 	"Gameplay"
 }
-name="Movable Suggestios - Reloaded"
+name="Movable Suggestinos - Reloaded"
 supported_version="1.12.5"
 path="C:/Users/Rene/Documents/Paradox Interactive/Crusader Kings III/mod/movable_suggestions_reloaded"

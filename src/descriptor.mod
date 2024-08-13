@@ -4,5 +4,5 @@ tags={
 	"Graphics"
 	"Gameplay"
 }
-name="Movable Suggestios - Reloaded"
+name="Movable Suggestions - Reloaded"
 supported_version="1.12.5"
