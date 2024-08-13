@@ -1,0 +1,781 @@
+﻿types Notifications {
+
+    ######################################################
+    ################### SUGGESTIONS ######################
+    ######################################################
+    type notifications_suggestions = window {
+        name = "action_items"
+        visible = "[And( And( ActionItemHandler.ShouldBeVisible, Not( IsGameViewOpen( 'barbershop' ) ) ), Not( IsPauseMenuShown ) )]"
+        visible_at_creation = no
+        alwaystransparent = no
+        allow_outside = yes
+
+        using = Animation_ShowHide_Quick
+
+        ## Suggestions / Current Situation toggle button
+        button = {
+            name = "suggestions_button"
+            parentanchor = top|hcenter
+            size = { 79 69 }
+            position = { 0 -10 }
+            gfxtype = togglepushbuttongfx
+            effectname = "NoHighlight"
+            shaderfile = "gfx/FX/pdxgui_pushbutton.shader"
+
+            onclick = "[ActionItemHandler.ToggleList]"
+            shortcut = "action_list"
+
+            texture = "gfx/interface/hud/button_hud_suggestions.dds"
+
+            tooltip = "ACTIONS_TT"
+            using = tooltip_se
+
+            modify_texture = {
+                name = "mouseover"
+                visible = "[GreaterThan_int32(ActionItemHandler.GetNumberOfUnreadActions, '(int32)0')]"
+                texture = "gfx/interface/component_effects/effect_shimmer.dds"
+                blend_mode = colordodge
+                alpha = 0
+            }
+
+            state = {
+                name = _mouse_enter
+                duration = 0.05
+                frame = 2
+                position = { 0 0 }
+
+                modify_texture = {
+                    name = "mouseover"
+                    alpha = 1
+                }
+            }
+
+            state = {
+                name = _mouse_leave
+                duration = 0.1
+                position = { 0 -10 }
+
+                modify_texture = {
+                    name = "mouseover"
+                    alpha = 0
+                }
+            }
+
+            state = {
+                name = _mouse_press
+                scale = 1
+                position = { 0 -5 }
+            }
+
+            state = {
+                name = _mouse_release
+                scale = 1
+            }
+
+            glow = {
+                using = Color_Bright_Yellow
+                glow_radius = 5
+                using = Glow_Standard
+                alpha = 0
+            }
+
+            state = {
+                name = "up_start"
+                next = "up_end"
+                position = { 0 0 }
+                duration = 0.5
+                trigger_when = "[ActionItemHandler.ActionsWentUp]"
+
+                using = Animation_Curve_Default
+                glow_alpha = 1
+            }
+
+            state = {
+                name = "up_end"
+                duration = 0.3
+                position = { 0 -15 }
+
+                using = Animation_Curve_Default
+                glow_alpha = 0
+            }
+
+            modify_texture = {
+                name = "shimmer"
+                visible = "[And(GreaterThan_int32(ActionItemHandler.GetNumberOfUnreadActions, '(int32)0'), Not(ActionItemHandler.HasVisibleDangerousAction))]"
+                texture = "gfx/interface/component_effects/effect_shimmer.dds"
+                blend_mode = colordodge
+                translate_uv = { 0.2 0.2 }
+            }
+
+            state = {
+                name = shimmer
+                next = pause
+                delay = 0.5
+
+                trigger_when = "[ActionItemHandler.ActionsWentUp]"
+
+                bezier = { 0 0.9 1 0.4 }
+
+                modify_texture = {
+                    name = "shimmer"
+                    translate_uv = { 1 -1 }
+                }
+            }
+
+            state = {
+                name = pause
+                next = inbetween
+                duration = 1.5
+
+                modify_texture = {
+                    name = "shimmer"
+                    translate_uv = { -1 1 }
+                }
+            }
+
+            state = {
+                name = inbetween
+                next = shimmer
+                duration = 3
+
+                modify_texture = {
+                    name = "shimmer"
+                    translate_uv = { -1 -1 }
+                }
+            }
+
+            modify_texture = {
+                name = "shimmer_dangerous"
+                visible = "[And(GreaterThan_int32(ActionItemHandler.GetNumberOfUnreadActions, '(int32)0'), ActionItemHandler.HasVisibleDangerousAction)]"
+                texture = "gfx/interface/component_effects/effect_shimmer_dangerous.dds"
+                blend_mode = colordodge
+                translate_uv = { 1 1 }
+            }
+
+            state = {
+                name = shimmer_2
+                next = pause_2
+                trigger_on_create = yes
+                delay = 0.5
+
+                trigger_when = "[ActionItemHandler.ActionsWentUp]"
+
+                bezier = { 0 0.9 1 0.4 }
+
+                modify_texture = {
+                    name = "shimmer_dangerous"
+                    translate_uv = { 1 -1 }
+                }
+            }
+
+            state = {
+                name = pause_2
+                next = inbetween_2
+                duration = 1.5
+
+                modify_texture = {
+                    name = "shimmer_dangerous"
+                    translate_uv = { -1 1 }
+                }
+            }
+
+            state = {
+                name = inbetween_2
+                next = shimmer_2
+                duration = 2
+
+                modify_texture = {
+                    name = "shimmer_dangerous"
+                    translate_uv = { -1 -1 }
+                }
+            }
+
+            ## dangerous action
+            text_single = {
+                name = "actions_number_dangerous"
+                visible = "[ActionItemHandler.HasVisibleDangerousAction]"
+                parentanchor = center
+
+                text = "[ActionItemHandler.GetNumberOfUnreadActions]"
+                align = nobaseline
+                using = Font_Size_Big
+                default_format = "#high;glow_color:{0.9,0.1,0.1,1.0}"
+                snap_to_pixels = no
+                alpha = "[Select_float(GreaterThan_int32(ActionItemHandler.GetNumberOfUnreadActions, '(int32)0'),'(float)1.0','(float)0.5')]"
+
+                state = {
+                    name = "up_start"
+                    next = "up_end"
+                    scale = 1.5
+                    duration = 0.25
+                    trigger_when = "[ActionItemHandler.ActionsWentUp]"
+                }
+
+                state = {
+                    name = "up_end"
+                    scale = 1
+                    duration = 0.25
+                }
+            }
+
+            text_single = {
+                name = "actions_number"
+                visible = "[Not(ActionItemHandler.HasVisibleDangerousAction)]"
+                parentanchor = center
+
+                text = "[ActionItemHandler.GetNumberOfUnreadActions]"
+                align = nobaseline
+                using = Font_Size_Big
+                default_format = "#high;glow_color:{0.1,0.1,0.1,1.0}"
+                snap_to_pixels = no
+
+                state = {
+                    name = "up_start"
+                    next = "up_end"
+                    scale = 1.5
+                    duration = 0.25
+                    trigger_when = "[ActionItemHandler.ActionsWentUp]"
+                }
+
+                state = {
+                    name = "up_end"
+                    scale = 1
+                    duration = 0.25
+                }
+            }
+        }
+
+        window = {
+            visible = "[ActionItemHandler.IsListVisible]"
+            visible_at_creation = no
+            alwaystransparent = no
+            filter_mouse = all
+            
+
+            state = {
+                name = _show
+                using = Animation_FadeIn_Quick
+                using = Sound_WindowShow_Suggestion
+                position_y = 80
+            }
+
+            state = {
+                name = _hide
+                using = Animation_FadeOut_Quick
+                using = Sound_WindowHide_Suggestion
+                position_y = 40
+            }
+
+            background = {
+                name = "paper_texture_shadow"
+                texture = "gfx/interface/window_event/tile_letter_shadow.dds"
+                spriteType = Corneredtiled
+                spriteborder = { 200 200 }
+            }
+
+            background = {
+                name = "paper_texture_flat"
+                texture = "gfx/interface/window_event/tile_letter_flat.dds"
+                spriteType = Corneredtiled
+                spriteborder = { 200 200 }
+                alpha = 0.9
+                color = { 0.51 0.53 0.58 1 }
+
+                modify_texture = {
+                    name = "paper_texture_overlay"
+                    texture = "gfx/interface/window_event/overlay_letter_texture.dds"
+                    spriteType = Corneredstretched
+                    blend_mode = overlay
+                }
+            }
+
+            #### DECOR
+            widget = {
+                size = { 100%% 97% }
+                scissor = yes
+
+                widget = {
+                    position = { 6 6 }
+                    scale = 0.5
+                    alpha = 0.6
+
+                    background = {
+                        texture = "gfx/interface/window_event/letter_event_pattern_big.dds"
+                        tintcolor = { 0.75 0.9 0.9 1 }
+
+                        modify_texture = {
+                            name = "paper_texture_overlay"
+                            texture = "gfx/interface/window_event/overlay_letter_texture.dds"
+                            spriteType = Corneredstretched
+                            blend_mode = overlay
+                        }
+                    }
+                }
+
+                widget = {
+                    parentanchor = top|right
+                    position = { -6 6 }
+                    scale = 0.5
+                    alpha = 0.6
+
+                    background = {
+                        texture = "gfx/interface/window_event/letter_event_pattern_big.dds"
+                        mirror = horizontal
+                        tintcolor = { 0.75 0.9 0.9 1 }
+
+                        modify_texture = {
+                            name = "paper_texture_overlay"
+                            texture = "gfx/interface/window_event/overlay_letter_texture.dds"
+                            blend_mode = overlay
+                        }
+                    }
+                }
+            }
+
+            widget = {
+                name = "button"
+                parentanchor = top|right
+                position = { -5 5 }
+
+                background = {
+                    using = Background_Area
+                    mirror = vertical
+                    margin_left = 55
+                    margin_bottom = 55
+                    modify_texture = {
+                        texture = "gfx/interface/component_masks/mask_fade_corner.dds"
+                        blend_mode = alphamultiply
+                    }
+                }
+
+                buttons_window_control = {
+                    name = "close_suggestions_button"
+                    resizeparent = yes
+
+                    blockoverride "button_close" {
+                        onclick = "[ActionItemHandler.ToggleList]"
+                        shortcut = "close_window"
+                        tooltip = "CLOSE_TOOLTIP"
+                    }
+                }
+            }
+
+            vbox = {
+                
+                name = "action_items_container"
+                set_parent_size_to_minimum = yes
+                margin_top = 14
+                spacing = 15
+                ignoreinvisible = yes
+
+                vbox = {
+                    name = "suggestions"
+                    visible = "[Or( Not(IsDataModelEmpty(AccessSuggestionItems) ), IsDataModelEmpty(ActionItemHandler.GetGuiActionItems ) )]"
+                    layoutpolicy_horizontal = expanding
+                    spacing = 10
+                    ignoreinvisible = yes
+
+                    text_single = {
+                        text = "CURRENT_SITUATION_SUGGESTIONS"
+                        using = Font_Size_Medium
+                        using = Font_Type_Flavor
+                        default_format = "#light_background"
+                    }
+
+                    text_single = {
+                        visible = "[IsDataModelEmpty(AccessSuggestionItems)]"
+                        text = "CURRENT_SITUATION_SUGGESTIONS_EMPTY"
+                        default_format = "#light_background;italic"
+                    }
+
+                    flowcontainer = {
+                        name = "suggestion_items"
+                        datamodel = "[AccessSuggestionItems]"
+                        layoutpolicy_horizontal = expanding
+                        direction = vertical
+                        margin_left = 22
+                        ignoreinvisible = yes
+                        spacing = 5
+
+                        item = {
+                            button_suggestion_item = {
+                                minimumsize = { 360 0 }
+                            }
+                        }
+                    }
+                }
+
+                vbox = {
+                    name = "actions"
+                    layoutpolicy_horizontal = expanding
+                    spacing = 5
+                    margin = { 8 0 }
+                    margin_bottom = 8
+
+                    vbox = {
+                        layoutpolicy_horizontal = expanding
+
+                        text_single = {
+                            layoutpolicy_horizontal = expanding
+                            text = "CURRENT_SITUATION_HEADER"
+                            max_width = 390
+                            using = Font_Size_Medium
+                            allow_outside = yes
+                            align = center
+                            using = Font_Type_Flavor
+                            default_format = "#light_background"
+
+                            widget = {
+                                allow_outside = yes
+                                parentanchor = right
+
+                                button_change = {
+                                    name = "reset_dismissed"
+                                    onclick = "[ActionItemHandler.ResetAllDismissed]"
+                                    tooltip = "RESET_DISMISSED_TOOLTIP"
+
+                                    background = {
+                                        using = Background_Area
+                                        mirror = horizontal
+                                        margin = { 8 3 }
+
+                                        tintcolor = { 0.22 0.16 0.04 0.5 }
+
+                                        modify_texture = {
+                                            texture = "gfx/interface/component_masks/mask_fade_horizontal_middle_thick.dds"
+                                            blend_mode = alphamultiply
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    text_single = {
+                        visible = "[Not( ActionItemHandler.HasAvailableCurrentSituationItems )]"
+                        text = "CURRENT_SITUATION_SUGGESTIONS_EMPTY"
+                        default_format = "#light_background;italic"
+                    }
+
+                    container = {
+                        scrollbox = {
+                            visible = "[ActionItemHandler.HasAvailableCurrentSituationItems]"
+                            maximumsize = { -1 800 }
+
+                            blockoverride "scrollbox_background_fade" {}
+                            blockoverride "scrollbox_background" {}
+
+                            blockoverride "scrollbox_margins"
+                            {
+                                margin_bottom = 15
+                                margin_left = 14
+                                margin_right = 14
+                            }
+
+                            blockoverride "scrollbox_content" {
+                                name = "current_situation"
+                                datamodel = "[ActionItemHandler.GetGuiActionItems]"
+                                set_parent_size_to_minimum = yes
+                                spacing = 5
+
+                                item = {
+                                    flowcontainer = {
+                                        ignoreinvisible = yes
+                                        minimumsize = { 500 0 }
+                                        direction = vertical
+
+                                        button_current_situation_item = {
+                                            visible = "[And(GuiActionItem.IsVisible, Not(GuiActionItem.HasMultipleActions))]"
+                                            datacontext = "[GuiActionItem.GetFirstVisibleActionItem]"
+                                            minimumsize = { 500 0 }
+                                        }
+
+                                        button_current_situation_item_multiple = {
+                                            visible = "[And(GuiActionItem.IsVisible, GuiActionItem.HasMultipleActions)]"
+                                            minimumsize = { 500 0 }
+                                        }
+
+                                        flowcontainer = {
+                                            name = "expanded_action_items"
+                                            datamodel = "[GuiActionItem.GetImportantActionItems]"
+                                            visible = "[GuiActionItem.IsExpanded]"
+                                            direction = vertical
+                                            spacing = 3
+
+                                            margin_left = 10
+                                            margin_top = 3
+                                            margin_bottom = 5
+
+                                            ignoreinvisible = yes
+
+                                            item = {
+                                                button_current_situation_item_combined = {
+                                                    datacontext = "[GuiActionImportantActionItem.GetImportantAction]"
+                                                    minimumsize = { 490 0 }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+types Suggestions
+{
+    type button_suggestion_item = button_standard {
+        onclick = "[SuggestionItem.OnClick]"
+        onrightclick = "[SuggestionItem.Dismiss]"
+        button_ignore = none
+        tooltip = "[SuggestionItem.GetTooltip]"
+
+        background = {
+            using = Status_Suggestion
+        }
+
+        background = {
+            texture = "gfx/interface/component_tiles/tile_vignette_3px.dds"
+            spriteType = Corneredtiled
+            spriteborder = { 5 5 }
+            margin = { -2 -2 }
+            alpha = 0.3
+        }
+
+        using = situation_entry_parent_hover_states
+
+        hbox = {
+            margin = { 10 5 }
+            margin_right = 5
+            restrictparent_min = yes
+
+            text_single = {
+                layoutpolicy_horizontal = expanding
+                align = nobaseline
+                text = "[SuggestionItem.GetLabel]"
+            }
+
+            button_cancel_small = {
+                tooltip = "DISMISS_SUGGESTION_TT"
+                onclick = "[SuggestionItem.Dismiss]"
+                inherit_visual_state = no
+
+                using = situation_entry_child_hover_states
+            }
+        }
+    }
+
+    type button_current_situation_item = button_standard {
+        visible = "[ImportantActionItem.IsVisible]"
+        minimumsize = { 500 0 }
+
+        onclick = "[ImportantActionItem.OnClick]"
+        onrightclick = "[ImportantActionItem.Dismiss]"
+        button_ignore = none
+        onmousehierarchyenter = "[ImportantActionItem.MarkAsRead]"
+        tooltip = "[ImportantActionItem.GetTooltip]"
+
+        using = situation_entry_parent_hover_states
+
+        background = {
+            visible = "[And(Not(ImportantActionItem.IsUnimportant), ImportantActionItem.GetActionType.IsDangerous)]"
+            using = Status_Suggestion_Bad
+        }
+
+        background = {
+            visible = "[And(Not(ImportantActionItem.IsUnimportant), Not(ImportantActionItem.GetActionType.IsDangerous))]"
+            using = Status_Suggestion_Good
+        }
+
+        icon = {
+            name = "new_action_effect"
+            visible = "[Not(ImportantActionItem.IsRead)]"
+            size = { 100% 100% }
+
+            spriteType = Corneredtiled
+            spriteborder = { 10 10 }
+
+            texture = "gfx/interface/component_effects/attention_text.dds"
+            color = { 1 0.8 0.6 0.8 }
+
+            state = {
+                trigger_on_create = yes
+                name = a
+                next = b
+
+                using = Animation_Curve_Default
+                duration = 0.8
+                alpha = 1
+            }
+
+            state = {
+                name = b
+                next = a
+
+                using = Animation_Curve_Default
+                duration = 1.5
+                alpha = 0.5
+            }
+        }
+
+        hbox = {
+            margin = { 10 5 }
+            margin_right = 5
+            restrictparent_min = yes
+            ignoreinvisible = yes
+
+            text_multi = {
+                autoresize = yes
+                max_width = 460
+                text = "ACTION_IS_VISIBLE_READ_UNREAD"
+                alwaystransparent = yes
+                fontsize = 14
+            }
+
+            expand = {}
+
+            button_cancel_small = {
+                tooltip = "DISMISS_CS_TT"
+
+                onclick = "[ImportantActionItem.Dismiss]"
+                inherit_visual_state = no
+
+                using = situation_entry_child_hover_states
+            }
+        }
+    }
+
+    type button_current_situation_item_multiple = button_standard {
+        onclick = "[GuiActionItem.OnClick]"
+        onrightclick = "[GuiActionItem.Dismiss]"
+        button_ignore = none
+        onmousehierarchyenter = "[GuiActionItem.MarkAsRead]"
+        tooltip = "[GuiActionItem.GetCombinedTooltip]"
+
+        background = {
+            visible = "[And(Not(GuiActionItem.IsUnimportant), GuiActionItem.HasAnyActionIsDangerous)]"
+            using = Status_Suggestion_Bad
+        }
+
+        background = {
+            visible = "[And(Not(GuiActionItem.IsUnimportant), Not(GuiActionItem.HasAnyActionIsDangerous))]"
+            using = Status_Suggestion_Good
+        }
+
+        icon = {
+            name = "new_action_effect"
+            visible = "[Not(GuiActionItem.IsRead)]"
+            size = { 100% 100% }
+
+            spriteType = Corneredtiled
+            spriteborder = { 10 10 }
+
+            texture = "gfx/interface/component_effects/attention_text.dds"
+            color = { 1 0.8 0.6 0.8 }
+
+            state = {
+                trigger_on_create = yes
+                name = a
+                next = b
+
+                using = Animation_Curve_Default
+                duration = 0.8
+                alpha = 1
+            }
+
+            state = {
+                name = b
+                next = a
+
+                using = Animation_Curve_Default
+                duration = 1.5
+                alpha = 0.5
+            }
+        }
+
+        hbox = {
+            restrictparent_min = yes
+            margin = { 10 5 }
+            spacing = 5
+            minimumsize = { 0 40 }
+
+            button_expand = {
+                size = { 22 22 }
+                frame = "[BoolTo1And2(GuiActionItem.IsExpanded)]"
+                scissor = yes
+                alwaystransparent = yes
+            }
+
+            text_multi = {
+                layoutpolicy_horizontal = expanding
+                autoresize = yes
+                max_width = 460
+                text = "IMPORTANT_ACTION_COMBINED_LABEL"
+                alwaystransparent = yes
+                fontsize = 14
+            }
+
+            text_single = {
+                text = "[GuiActionItem.GetNumberOfVisibleItems]"
+                default_format = "#high"
+                align = nobaseline
+                alwaystransparent = yes
+            }
+        }
+    }
+
+    type button_current_situation_item_combined = button_standard {
+        visible = "[ImportantActionItem.IsVisible]"
+        onclick = "[ImportantActionItem.OnClick]"
+        onrightclick = "[ImportantActionItem.Dismiss]"
+        button_ignore = none
+
+        onmousehierarchyenter = "[ImportantActionItem.MarkAsRead]"
+
+        tooltip = "[ImportantActionItem.GetTooltip]"
+
+        background = {
+            visible = "[And(Not(ImportantActionItem.IsUnimportant), ImportantActionItem.GetActionType.IsDangerous)]"
+            using = Status_Suggestion_Bad
+        }
+
+        background = {
+            visible = "[And(Not(ImportantActionItem.IsUnimportant), Not(ImportantActionItem.GetActionType.IsDangerous))]"
+            using = Status_Suggestion_Good
+        }
+
+        using = situation_entry_parent_hover_states
+
+        hbox = {
+            margin = { 10 5 }
+            margin_right = 5
+            restrictparent_min = yes
+
+            text_multi = {
+                layoutpolicy_horizontal = expanding
+                autoresize = yes
+                max_width = 500
+                fontsize = 14
+
+                align = nobaseline
+                text = "ACTION_IS_VISIBLE_READ_UNREAD_COMBINED"
+                alwaystransparent = yes
+            }
+
+            expand = {}
+
+            button_cancel_small = {
+                tooltip = "DISMISS_CS_TT"
+                onclick = "[ImportantActionItem.Dismiss]"
+                inherit_visual_state = no
+
+                using = situation_entry_child_hover_states
+            }
+        }
+    }
+}
