@@ -1,18 +1,19 @@
 [h1]Movable Suggestions Reloaded[/h1]
 
-Inspired by the original "[Movable Suggestions](https://steamcommunity.com/sharedfiles/filedetails/?id=2221751176&searchtext=Movable+Suggestions)" mod, Movable Suggestions Reloaded enhances your gameplay experience by offering a more refined, user-friendly suggestions panel. This mod was built with a focus on minimal invasiveness, ensuring that it integrates smoothly with other game features without conflicts.
+Inspired by the original [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2221751176&searchtext=Movable+Suggestions]Movable Suggestions[/url] mod, Movable Suggestions Reloaded enhances your gameplay experience by offering a more refined, user-friendly suggestions panel. This mod was built with a focus on minimal invasiveness, ensuring that it integrates smoothly with other game features without conflicts.
 
 [h1]If you like, please rate and subscribe[/h1]
 
 [h2]Key Features[/h2]
 
 [list]
-[*]**Non-Intrusive Code:** Utilizes Override to maintain compatibility with other game features, avoiding the issues caused by overwriting crucial game files.
-[*]**Enhanced Readability:** The suggestions panel is slightly wider, providing better readability for long texts.
-[*]**Optimized Font Sizes:** Smaller font sizes are implemented to prevent text from spilling over into multiple lines, ensuring a cleaner, more organized interface.
+[*][b]Non-Intrusive Code:[/b] Utilizes Override to maintain compatibility with other game features, avoiding the issues caused by overwriting crucial game files.
+[*][b]Enhanced Readability:[/b] The suggestions panel is slightly wider, providing better readability for long texts.
+[*][b]Optimized Font Sizes:[/b] Smaller font sizes are implemented to prevent text from spilling over into multiple lines, ensuring a cleaner, more organized interface.
+[*][b]Last Version Updated:[/b] Updated to last version of CK3. 1.12.5
 [/list]
- - **Last Version Updated:** Updated to last version of CK3. 1.12.5
- 
+
+
 [h2]Supported Languages[/h2]
 
 [list]
@@ -66,8 +67,9 @@ Help me to identify new ones.
 [h1]Check Out My Other Mods[/h1]
 
 [list]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3293659496]*][Ultimate Map Graphics[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3305519391]*][Better Terrain Graphics[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3300642878]*][Legacy of Knowledge[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3305890494]*][Better Battle Window V2[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3293659496]Ultimate Map Graphics[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3305519391]Better Terrain Graphics[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3300642878]Legacy of Knowledge[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3305890494]Better Battle Window V2[/url]
 [/list]
+
