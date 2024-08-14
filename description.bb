@@ -71,5 +71,5 @@ Help me to identify new ones.
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3305519391]Better Terrain Graphics[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3300642878]Legacy of Knowledge[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3305890494]Better Battle Window V2[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3308667178]Movable Suggestions[/url]
 [/list]
-
