@@ -291,7 +291,7 @@
 
             #### DECOR
             widget = {
-                size = { 100%% 97% }
+                size = { 100% 97% }
                 scissor = yes
 
                 widget = {
@@ -460,7 +460,7 @@
                     container = {
                         scrollbox = {
                             visible = "[ActionItemHandler.HasAvailableCurrentSituationItems]"
-                            maximumsize = { -1 800 }
+                            maximumsize = { 540 800 }
 
                             blockoverride "scrollbox_background_fade" {}
                             blockoverride "scrollbox_background" {}
@@ -483,16 +483,17 @@
                                         ignoreinvisible = yes
                                         minimumsize = { 500 0 }
                                         direction = vertical
+                                        
 
                                         button_current_situation_item = {
                                             visible = "[And(GuiActionItem.IsVisible, Not(GuiActionItem.HasMultipleActions))]"
                                             datacontext = "[GuiActionItem.GetFirstVisibleActionItem]"
-                                            minimumsize = { 500 0 }
+                                            minimumsize = {482 -1}
                                         }
 
                                         button_current_situation_item_multiple = {
                                             visible = "[And(GuiActionItem.IsVisible, GuiActionItem.HasMultipleActions)]"
-                                            minimumsize = { 500 0 }
+                                            minimumsize = {482 -1}
                                         }
 
                                         flowcontainer = {
@@ -511,7 +512,7 @@
                                             item = {
                                                 button_current_situation_item_combined = {
                                                     datacontext = "[GuiActionImportantActionItem.GetImportantAction]"
-                                                    minimumsize = { 490 0 }
+                                                    
                                                 }
                                             }
                                         }
@@ -555,6 +556,7 @@ types Suggestions
             restrictparent_min = yes
 
             text_single = {
+                maximumsize = {450 -1}
                 layoutpolicy_horizontal = expanding
                 align = nobaseline
                 text = "[SuggestionItem.GetLabel]"
@@ -572,7 +574,7 @@ types Suggestions
 
     type button_current_situation_item = button_standard {
         visible = "[ImportantActionItem.IsVisible]"
-        minimumsize = { 500 0 }
+        
 
         onclick = "[ImportantActionItem.OnClick]"
         onrightclick = "[ImportantActionItem.Dismiss]"
@@ -631,7 +633,8 @@ types Suggestions
 
             text_multi = {
                 autoresize = yes
-                max_width = 460
+                minimumsize = { 428 0 }
+                maximumsize = {428 -1}
                 text = "ACTION_IS_VISIBLE_READ_UNREAD"
                 alwaystransparent = yes
                 fontsize = 14
@@ -714,13 +717,14 @@ types Suggestions
             text_multi = {
                 layoutpolicy_horizontal = expanding
                 autoresize = yes
-                max_width = 460
+                maximumsize = {428 -1}
                 text = "IMPORTANT_ACTION_COMBINED_LABEL"
                 alwaystransparent = yes
                 fontsize = 14
             }
 
             text_single = {
+                maximumsize = {428 -1}
                 text = "[GuiActionItem.GetNumberOfVisibleItems]"
                 default_format = "#high"
                 align = nobaseline
@@ -759,7 +763,8 @@ types Suggestions
             text_multi = {
                 layoutpolicy_horizontal = expanding
                 autoresize = yes
-                max_width = 500
+                minimumsize = { 428 0 }
+                maximumsize = {428 -1}
                 fontsize = 14
 
                 align = nobaseline
