@@ -5,4 +5,4 @@ tags={
 	"Gameplay"
 }
 name="Movable Suggestions - Reloaded"
-supported_version="1.14..2.2"
+supported_version="1.14.2.2"
